@@ -1,28 +1,19 @@
-#include "novadesk_addon.h"
-#include <iostream>
+#include <NovadeskAPI/novadesk_addon.h>
 
 // The initialization function is called when the addon is loaded.
-// You can use the duk_context to register global functions/objects or return a value to JS.
-extern "C" __declspec(dllexport) void NovadeskAddonInit(duk_context* ctx) {
-    // Create an object to return to JavaScript
-    duk_push_object(ctx);
+NOVADESK_ADDON_INIT(ctx) {
+    // Use the C++ helper to manage registration
+    novadesk::Addon addon(ctx);
 
-    // Add a hello function
-    duk_push_c_function(ctx, [](duk_context* ctx) -> duk_ret_t {
-        duk_push_string(ctx, "Hello from the External Addon SDK!");
-        return 1;
-    }, 0);
-    duk_put_prop_string(ctx, -2, "hello");
+    // Register properties and functions easily
+    addon.RegisterStringFunction("hello", "Hello from the abstracted Addon SDK!");
 
-    // Add a version string
-    duk_push_string(ctx, "1.0.0");
-    duk_put_prop_string(ctx, -2, "version");
-
-    // The object at the top of the stack will be returned by system.loadAddon()
+    addon.RegisterString("version", "1.0.0");
+    addon.RegisterNumber("id", 42);
+    addon.RegisterBool("isNative", true);
 }
 
 // Optional: The unload function is called when the script reloads or Novadesk exits.
-extern "C" __declspec(dllexport) void NovadeskAddonUnload() {
-    // Perform any necessary cleanup here
-    // Note: Do not use the duk_context here as it may already be partially destroyed.
+NOVADESK_ADDON_UNLOAD() {
+    // Perform any necessary cleanup here (no Duktape context available here)
 }

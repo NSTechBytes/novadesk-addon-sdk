@@ -34,14 +34,17 @@ Official SDK for developing external addons for Novadesk.
 ## Example (C++)
 
 ```cpp
-#include "novadesk_addon.h"
+#include <NovadeskAPI/novadesk_addon.h>
 
-extern "C" __declspec(dllexport) void NovadeskAddonInit(duk_context* ctx) {
-    // Register your functions here
-    duk_push_object(ctx);
-    duk_push_string(ctx, "Hello from C++!");
-    duk_put_prop_string(ctx, -2, "message");
-    // The object at the top of the stack is returned to JS
+NOVADESK_ADDON_INIT(ctx) {
+    // Use the C++ helper to manage registration
+    novadesk::Addon addon(ctx);
+
+    addon.RegisterString("version", "1.0.0");
+    
+    addon.RegisterStringFunction("hello", "Hello from the abstracted SDK!");
+
+    // The object is automatically returned to JS
 }
 ```
 
