@@ -24,6 +24,11 @@ NOVADESK_ADDON_INIT(ctx, hMsgWnd, host) {
     // Register properties and functions easily
     addon.RegisterString("version", "1.0.0");
 
+    addon.RegisterFunction("hello", [](novadesk_context ctx) -> int {
+        g_Host->PushString(ctx, "Hello from native C++ addon!");
+        return 1;
+    });
+
     // Nest objects for cleaner APIs
     addon.RegisterObject("utils", [](novadesk::Addon& utils) {
         utils.RegisterNumber("id", 123);

@@ -4,6 +4,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hello_world", "examples\hello_world\hello_world.vcxproj", "{91D187FA-3FB9-4EC8-90B2-54218F4A2E0F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math_utils", "examples\math_utils\math_utils.vcxproj", "{A1B2C3D4-E5F6-47A8-B9C0-D1E2F3A4B5C6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpu_monitor", "examples\cpu_monitor\cpu_monitor.vcxproj", "{13E090C6-A68C-4BE7-828A-D0A59868C4AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -14,8 +18,19 @@ Global
 		{91D187FA-3FB9-4EC8-90B2-54218F4A2E0F}.Debug|Win32.Build.0 = Debug|Win32
 		{91D187FA-3FB9-4EC8-90B2-54218F4A2E0F}.Release|Win32.ActiveCfg = Release|Win32
 		{91D187FA-3FB9-4EC8-90B2-54218F4A2E0F}.Release|Win32.Build.0 = Release|Win32
+		{A1B2C3D4-E5F6-47A8-B9C0-D1E2F3A4B5C6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A1B2C3D4-E5F6-47A8-B9C0-D1E2F3A4B5C6}.Debug|Win32.Build.0 = Debug|Win32
+		{A1B2C3D4-E5F6-47A8-B9C0-D1E2F3A4B5C6}.Release|Win32.ActiveCfg = Release|Win32
+		{A1B2C3D4-E5F6-47A8-B9C0-D1E2F3A4B5C6}.Release|Win32.Build.0 = Release|Win32
+		{13E090C6-A68C-4BE7-828A-D0A59868C4AB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13E090C6-A68C-4BE7-828A-D0A59868C4AB}.Debug|Win32.Build.0 = Debug|Win32
+		{13E090C6-A68C-4BE7-828A-D0A59868C4AB}.Release|Win32.ActiveCfg = Release|Win32
+		{13E090C6-A68C-4BE7-828A-D0A59868C4AB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CCC186F8-3A60-40BD-93A2-1E2E32FE4B6C}
 	EndGlobalSection
 EndGlobal
