@@ -2,7 +2,7 @@
 
 const NovadeskHostAPI* g_Host = nullptr;
 
-// --- Math Addon Entry Point ---
+/** Math Addon Entry Point */
 NOVADESK_ADDON_INIT(ctx, hMsgWnd, host) {
     g_Host = host;
     novadesk::Addon addon(ctx, host);

@@ -2,7 +2,7 @@
 #include <thread>
 #include <atomic>
 
-// --- CPU Usage Helper ---
+/** CPU Usage Helper */
 static FILETIME g_prevIdleTime;
 static FILETIME g_prevKernelTime;
 static FILETIME g_prevUserTime;
@@ -31,7 +31,7 @@ double GetCPUUsage() {
     return (double)(totalDiff - idleDiff) * 100.0 / totalDiff;
 }
 
-// --- Global State ---
+/** Global State */
 std::atomic<bool> g_Monitoring = false;
 novadesk::JsFunction* g_OnCpuUpdate = nullptr;
 novadesk::Dispatcher* g_Dispatcher = nullptr;
@@ -46,7 +46,7 @@ void OnCpuUpdateMainThread(void* data) {
     }
 }
 
-// --- Addon Entry Point ---
+/** Addon Entry Point */
 NOVADESK_ADDON_INIT(ctx, hMsgWnd, host) {
     g_Host = host;
     novadesk::Addon addon(ctx, host);
