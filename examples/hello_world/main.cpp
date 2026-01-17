@@ -5,6 +5,7 @@
 std::atomic<bool> g_Running = false;
 novadesk::JsFunction* g_Callback = nullptr;
 novadesk::Dispatcher* g_Dispatcher = nullptr;
+const NovadeskHostAPI* g_Host = nullptr;
 
 // This function runs on the MAIN THREAD
 void OnPulse(void* data) {
@@ -14,29 +15,27 @@ void OnPulse(void* data) {
 }
 
 // The initialization function is called when the addon is loaded.
-NOVADESK_ADDON_INIT(ctx, hMsgWnd) {
-    // Use the C++ helper to manage registration
-    novadesk::Addon addon(ctx);
+NOVADESK_ADDON_INIT(ctx, hMsgWnd, host) {
+    g_Host = host;
+    novadesk::Addon addon(ctx, host);
     g_Running = true;
     g_Dispatcher = new novadesk::Dispatcher(hMsgWnd);
 
     // Register properties and functions easily
-    addon.RegisterStringFunction("hello", "Hello from the abstracted Addon SDK!");
     addon.RegisterString("version", "1.0.0");
 
     // Nest objects for cleaner APIs
     addon.RegisterObject("utils", [](novadesk::Addon& utils) {
         utils.RegisterNumber("id", 123);
-        utils.RegisterStringFunction("ping", "pong");
         
         // Return arrays of data
-        utils.RegisterArray("tags", {"cpp", "native", "addon"});
+        utils.RegisterArray("tags", {"cpp", "native", "addon", "decoupled"});
         utils.RegisterArray("versions", {1.0, 1.1, 2.0});
     });
 
     // JavaScript Callbacks (Event Hooks)
-    addon.RegisterFunction("onEvent", [](duk_context* ctx) -> duk_ret_t {
-        novadesk::JsFunction cb(ctx, 0); // Capture the function at index 0
+    addon.RegisterFunction("onEvent", [](novadesk_context ctx) -> int {
+        novadesk::JsFunction cb(ctx, g_Host, 0); // Capture the function at index 0
         if (cb.IsValid()) {
             cb.Call("Hello from C++ Callback!");
         }
@@ -44,19 +43,24 @@ NOVADESK_ADDON_INIT(ctx, hMsgWnd) {
     });
 
     // Persistent Background Thread
-    addon.RegisterFunction("startPulse", [](duk_context* ctx) -> duk_ret_t {
+    addon.RegisterFunction("startPulse", [](novadesk_context ctx) -> int {
         if (g_Callback) delete g_Callback;
-        g_Callback = new novadesk::JsFunction(ctx, 0);
+        g_Callback = new novadesk::JsFunction(ctx, g_Host, 1); // Fixed index 0 -> 1 because the callback is the first arg, but we need to account for 'this' if it were a method? No, duktape functions are 0-indexed args. Wait.
+        // Actually, duktape args are 0, 1, 2...
+        // Let's use index 0.
+        g_Callback = new novadesk::JsFunction(ctx, g_Host, 0);
 
-        std::thread([]() {
-            while (g_Running) {
-                std::this_thread::sleep_for(std::chrono::seconds(2));
-                if (g_Running && g_Dispatcher) {
-                    // Safely dispatch to main thread
-                    g_Dispatcher->Dispatch(OnPulse);
+        if (!g_Running) {
+            g_Running = true;
+            std::thread([]() {
+                while (g_Running) {
+                    std::this_thread::sleep_for(std::chrono::seconds(2));
+                    if (g_Running && g_Dispatcher) {
+                        g_Dispatcher->Dispatch(OnPulse);
+                    }
                 }
-            }
-        }).detach();
+            }).detach();
+        }
 
         return 0;
     });
@@ -67,5 +71,4 @@ NOVADESK_ADDON_UNLOAD() {
     g_Running = false;
     if (g_Callback) { delete g_Callback; g_Callback = nullptr; }
     if (g_Dispatcher) { delete g_Dispatcher; g_Dispatcher = nullptr; }
-    // Perform any necessary cleanup here (no Duktape context available here)
 }

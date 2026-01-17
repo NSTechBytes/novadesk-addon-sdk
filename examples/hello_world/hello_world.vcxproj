@@ -61,13 +61,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="..\..\NovadeskAPI\duktape\duktape.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="..\..\NovadeskAPI\novadesk_addon.h" />
-    <ClInclude Include="..\..\NovadeskAPI\duktape\duktape.h" />
-    <ClInclude Include="..\..\NovadeskAPI\duktape\duk_config.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="hello_world.rc" />
