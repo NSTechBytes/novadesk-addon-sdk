@@ -24,11 +24,11 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "OfficialNovadesk"
-            VALUE "FileDescription", "Novadesk Hello World Addon"
+            VALUE "FileDescription", "Novadesk Math Utils Addon"
             VALUE "FileVersion", "1.0.0.0"
-            VALUE "InternalName", "hello_world.dll"
+            VALUE "InternalName", "math_utils.dll"
             VALUE "LegalCopyright", "Copyright (C) 2026 OfficialNovadesk"
-            VALUE "OriginalFilename", "hello_world.dll"
+            VALUE "OriginalFilename", "math_utils.dll"
             VALUE "ProductName", "Novadesk Addon SDK"
             VALUE "ProductVersion", "1.0.0.0"
         END

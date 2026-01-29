@@ -5,7 +5,7 @@ console.log("=========================================");
 
 // 1. Hello World Addon
 console.log("\n[1/3] Loading Hello World...");
-const hello = system.loadAddon("../dist/Win32/Debug/hello_world/hello_world.dll");
+const hello = system.loadAddon("../dist/x64/Debug/hello_world/hello_world.dll");
 if (hello) {
     console.log("  Success! Version: " + hello.version);
     console.log("  Addon says: " + hello.hello());
@@ -19,7 +19,7 @@ if (hello) {
 
 // 2. Math Utilities Addon
 console.log("\n[2/3] Loading Math Utilities...");
-const math = system.loadAddon("../dist/Win32/Debug/math_utils/math_utils.dll");
+const math = system.loadAddon("../dist/x64/Debug/math_utils/math_utils.dll");
 if (math) {
     console.log("  Success!");
     console.log("  Test: 15 + 25 = " + math.sum(15, 25));
@@ -38,7 +38,7 @@ if (math) {
 
 // 3. CPU Monitor Addon
 console.log("\n[3/3] Loading CPU Monitor...");
-const cpu = system.loadAddon("../dist/Win32/Debug/cpu_monitor/cpu_monitor.dll");
+const cpu = system.loadAddon("../dist/x64/Debug/cpu_monitor/cpu_monitor.dll");
 if (cpu) {
     console.log("  Success! Initializing real-time tracker...");
     cpu.start(function(usage) {
@@ -57,9 +57,9 @@ setTimeout(function() {
     console.log("\n[Cleanup] Unloading all addons...");
     
     var addons = [
-        "../dist/Win32/Debug/hello_world/hello_world.dll",
-        "../dist/Win32/Debug/math_utils/math_utils.dll",
-        "../dist/Win32/Debug/cpu_monitor/cpu_monitor.dll"
+        "../dist/x64/Debug/hello_world/hello_world.dll",
+        "../dist/x64/Debug/math_utils/math_utils.dll",
+        "../dist/x64/Debug/cpu_monitor/cpu_monitor.dll"
     ];
 
     addons.forEach(function(path) {
